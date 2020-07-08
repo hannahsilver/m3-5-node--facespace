@@ -12,7 +12,28 @@ const handleFourOhFour = (req, res) => {
   res.status(404).send("I couldn't find what you're looking for.");
 };
 const handleHomepage = (req, res) => {
-  res.status(200).render("./pages/homepage", { users: users });
+  res.status(200).render("pages/homepage", { users: users });
+};
+
+const handleProfilePage = (req, res) => {
+  const _id = req.params._id;
+  let userObj = {};
+  users.forEach((user) => {
+    if (_id === user._id) {
+      userObj = user;
+    }
+  });
+
+  let friendsList = userObj.friends.map((friendId) => {
+    let foundUser = users.find((user) => {
+      if (user._id === friendId) {
+        return true;
+      }
+    });
+    return foundUser;
+  });
+
+  res.render("pages/profile", { user: userObj, friends: friendsList });
 };
 
 // -----------------------------------------------------
@@ -25,6 +46,8 @@ express()
 
   // endpoints
   .get("/", handleHomepage)
+
+  .get("/users/:_id", handleProfilePage)
 
   // a catchall endpoint that will send the 404 message.
   .get("*", handleFourOhFour)
