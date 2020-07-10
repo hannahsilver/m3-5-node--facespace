@@ -7,5 +7,10 @@
 </head>
 <body>
   <header class="header">
-      <h1 class='site-title'>Facespace</h1>
+      <a class='site-title' href="/">Facespace</a>
+      <% if (currentUser.name === undefined ) { %>
+        <a class="signin-button" href="/signin">Sign in</a>
+      <% } else { %>
+        <a class="signin-button" href=/users/<%= currentUser._id %>>Howdy, <%= currentUser.name %></a>
+      <% } %> 
   </header>

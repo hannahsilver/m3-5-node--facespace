@@ -12,6 +12,15 @@
   color: #fff;
   margin-top: 4px;
 }
+
+.site-title {
+  color: #fff;
+  font-size: 36px;
+  margin-top: 3px;
+  text-decoration: none;
+  font-family: "Teko", sans-serif;
+}
+
 .signin-button {
   background: var(--primary-color);
   border: 2px solid var(--primary-color);

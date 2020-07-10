@@ -12,7 +12,7 @@ const handleFourOhFour = (req, res) => {
   res.status(404).send("I couldn't find what you're looking for.");
 };
 const handleHomepage = (req, res) => {
-  res.status(200).render("pages/homepage", { users: users });
+  res.status(200).render("pages/homepage", { users: users, currentUser });
 };
 
 const handleProfilePage = (req, res) => {
@@ -33,11 +33,15 @@ const handleProfilePage = (req, res) => {
     return foundUser;
   });
 
-  res.render("pages/profile", { user: userObj, friends: friendsList });
+  res.render("pages/profile", {
+    user: userObj,
+    friends: friendsList,
+    currentUser,
+  });
 };
 
 const handleSignin = (req, res) => {
-  res.render("pages/signin");
+  res.render("pages/signin", { currentUser });
 };
 
 const handleName = (req, res) => {
@@ -45,6 +49,8 @@ const handleName = (req, res) => {
   let foundUser = users.find((user) => {
     return user.name === firstName;
   });
+
+  currentUser = foundUser;
 
   if (foundUser !== undefined) {
     res.status(200).redirect("/users/" + foundUser._id);
